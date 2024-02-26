@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+{% block title %} inbox {% endblock %}
+{% block content %}
+    
+
+<h1 class="mb-6 text-3xl">inbox</h1>
+
+<div class="space-y-6">
+    {% for convesetion in convesetions %}
+        <a href="{% url 'convesetion:detail' convesetion.id %}">
+            <div class="p-6 flex bg-gray-100 rounded-xl">
+                <div class="pr-6">
+                    <img src="{{ convesetion.item.image.url }}" class="w-20 rounded-xl">
+                </div>
+                <div>
+                    {% for member in convesetion.members.all %}
+                        {% if member != request.user %}
+                            <p class="mb-4"><strong> {{ member.username }} </strong> |{{ convesetion.modified_at }} </p>
+                            <p> {{ convesetion.item.name }} </p>
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+
+{% endblock %}
